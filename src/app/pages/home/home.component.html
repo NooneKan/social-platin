@@ -1,0 +1,20 @@
+<div class="home-container">
+  <section class="carrossel-secao">
+    <h2>Jogos Mais Bem Avaliados</h2>
+    <div class="carrossel">
+      <div *ngFor="let jogo of jogosMaisBemAvaliados" class="card-carrossel">
+        <img [src]="jogo.imagemUrl" [alt]="jogo.nome" />
+      </div>
+    </div>
+  </section>
+
+  <section class="carrossel-secao">
+    <h2>Jogos Relevantes</h2>
+    <div class="carrossel">
+      <div *ngFor="let jogo of jogosRelevantes" class="card-carrossel">
+        <img [src]="jogo.imagemUrl" [alt]="jogo.nome" />
+      </div>
+    </div>
+  </section>
+
+</div>

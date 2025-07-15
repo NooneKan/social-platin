@@ -15,7 +15,7 @@ export const MOCK_JOGADOR: Jogador = {
       jogo: {
         id: 'g1',
         nome: 'God of War Ragnarök',
-        imagemUrl: 'https://i.imgur.com/gow.png',
+        imagemUrl: 'https://via.placeholder.com/150',
         desenvolvedora: 'Santa Monica Studio',
         genero: 'Ação',
         tempoEstimadoHoras: 45,

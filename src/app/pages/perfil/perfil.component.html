@@ -1,19 +1,73 @@
-<h1>{{ jogador.nome }}</h1>
-<img [src]="jogador.avatarUrl" alt="Avatar" width="100" />
-<p>{{ jogador.bio }}</p>
+<div class="perfil-container">
+  <!-- TOPO DO PERFIL -->
+  <section class="perfil-topo">
+    <img [src]="jogador.avatarUrl" alt="Avatar" class="avatar" />
+    <div class="info">
+      <h1>{{ jogador.nome }}</h1>
+      <p class="bio">{{ jogador.bio }}</p>
 
-<h2>Platinas:</h2>
-<ul>
-  <li *ngFor="let platina of jogador.platinas">
-    <strong>{{ platina.jogo.nome }}</strong> - Nota: {{ platina.nota }}<br />
-    Comentário: {{ platina.comentario }}
-  </li>
-</ul>
+      <div class="gamertags">
+        <span *ngFor="let tag of jogador.gamertags" class="tag">
+          <i [ngClass]="getIconClass(tag.plataforma)"></i>
+          {{ tag.tag }}
+        </span>
+      </div>
 
-<h2>Gamertags</h2>
-<ul>
-  <li *ngFor="let gamertag of jogador.gamertags">
-    <strong>{{ gamertag.plataforma }}:</strong> {{ gamertag.tag }}
-  </li>
-</ul>
+      <div class="estatisticas">
+        <strong>Total de Platinas:</strong> {{ jogador.platinas.length }}
+      </div>
+    </div>
+  </section>
 
+  <!-- LISTA COMPLETA DE PLATINAS -->
+  <section class="platinas">
+    <h2>Platinas</h2>
+    <div class="platina-lista">
+      <div class="platina-card" *ngFor="let platina of jogador.platinas">
+        <img [src]="platina.jogo.imagemUrl" alt="Capa" class="jogo-capa" />
+        <div class="detalhes">
+          <h3>{{ platina.jogo.nome }}</h3>
+          <p class="comentario">"{{ platina.comentario }}"</p>
+          <p class="meta">
+            Nota: {{ platina.nota }} |
+            Dificuldade: {{ platina.dificuldade }}⭐ |
+            {{ platina.data | date }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DESTAQUES EM CARROSSEL -->
+  <section class="destaques">
+    <!-- Top 5 Platinas Mais Difíceis -->
+    <div class="platinas">
+      <h2>Platinas Mais Difíceis</h2>
+      <div class="carrossel">
+        <div
+          *ngFor="let platina of getTopDificeis(); index as i"
+          class="card-carrossel"
+        >
+          <span class="posicao">{{ i + 1 }}º</span>
+          <img [src]="platina.jogo.imagemUrl" class="capa" />
+          <div class="titulo">{{ platina.jogo.nome }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top 5 Jogos Favoritos -->
+    <div class="platinas">
+      <h2>Jogos Favoritos</h2>
+      <div class="carrossel">
+        <div
+          *ngFor="let platina of getTopFavoritos(); index as i"
+          class="card-carrossel"
+        >
+          <span class="posicao">{{ i + 1 }}º</span>
+          <img [src]="platina.jogo.imagemUrl" class="capa" />
+          <div class="titulo">{{ platina.jogo.nome }}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

@@ -6,7 +6,6 @@ export interface Jogador {
   avatarUrl: string;
   bio: string;
   platinas: Platina[];
-
   gamertags?: Gamertag[];
 }
 

@@ -1,1 +1,17 @@
+<nav class="navbar">
+  <div class="logo">
+    <h1>Social Platina</h1>
+  </div>
+  <ul class="nav-links">
+    <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a></li>
+    <li><a routerLink="/discovery" routerLinkActive="active">Discovery</a></li>
+    <li *ngIf="!usuarioLogado"><a routerLink="/cadastrar" routerLinkActive="active">Cadastrar-se</a></li>
+  </ul>
+
+  <!-- Link Perfil fixo no canto direito, só aparece se usuário logado -->
+  <div *ngIf="usuarioLogado" class="perfil-link">
+    <a routerLink="/perfil" routerLinkActive="active">Perfil</a>
+  </div>
+</nav>
+
 <router-outlet></router-outlet>
