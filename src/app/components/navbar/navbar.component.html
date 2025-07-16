@@ -1,1 +1,24 @@
-<p>navbar works!</p>
+<nav class="navbar">
+  <div class="nav-content">
+    <!-- Logo -->
+    <a class="nav-logo" routerLink="/">
+      <img src="assets/icons/logo.svg" alt="Logo" width="32">
+    </a>
+
+    <div class="nav-links">
+      <a routerLink="/dashboard" routerLinkActive="active" class="nav-link">Dashboard</a>
+      <a routerLink="/jogos" routerLinkActive="active" class="nav-link">Jogos</a>
+      <a routerLink="/platinas" routerLinkActive="active" class="nav-link">Platinas</a>
+      <a routerLink="/comunidade" routerLinkActive="active" class="nav-link">Comunidade</a>
+    </div>
+
+    <div class="nav-user">
+      <ng-container *ngIf="authService.isLoggedIn(); else notLoggedIn">
+        <img [src]="authService.getUserPhoto() || 'assets/user-icon.svg'" alt="Perfil" width="24" class="nav-link" routerLink="/perfil">
+      </ng-container>
+      <ng-template #notLoggedIn>
+        <a routerLink="/cadastrar" class="nav-link">Cadastrar</a>
+      </ng-template>
+    </div>
+  </div>
+</nav>

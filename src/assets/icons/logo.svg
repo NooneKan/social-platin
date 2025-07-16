@@ -1,0 +1,29 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradiente metálico estilo platina -->
+    <linearGradient id="gradPlatina" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#d0d9e2"></stop>
+      <stop offset="100%" stop-color="#a3b4c3"></stop>
+    </linearGradient>
+
+    <!-- Efeito de brilho suave -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#6aa6ff" flood-opacity="0.25"></feDropShadow>
+    </filter>
+  </defs>
+
+  <!-- Fundo escuro translúcido -->
+  <rect width="64" height="64" rx="16" fill="rgba(30, 30, 30, 0.85)"></rect>
+
+  <!-- Corpo do controle -->
+  <path d="M16 40C14 34 18 24 28 24H36C46 24 50 34 48 40C47.5 41.5 46 44 42 44C39.5 44 37 42 32 42C27 42 24.5 44 22 44C18 44 16.5 41.5 16 40Z" fill="url(#gradPlatina)" filter="url(#glow)"></path>
+
+  <!-- Estrelas como botões -->
+  <polygon points="24,30 25,32.5 27.8,32.5 25.6,34.2 26.4,37 24,35.4 21.6,37 22.4,34.2 20.2,32.5 23,32.5" fill="#1e1e1e"></polygon>
+  <polygon points="40,30 41,32 43,32 41.5,33.3 42.2,35 40,33.8 37.8,35 38.5,33.3 37,32 39,32" fill="#1e1e1e"></polygon>
+  <polygon points="42.5,34.5 43.2,36.2 45,36.2 43.5,37.4 44.2,39 42.5,38 40.8,39 41.5,37.4 40,36.2 41.8,36.2" fill="#1e1e1e"></polygon>
+  <polygon points="37.5,34.5 38.2,36.2 40,36.2 38.5,37.4 39.2,39 37.5,38 35.8,39 36.5,37.4 35,36.2 36.8,36.2" fill="#1e1e1e"></polygon>
+
+  <!-- Brilho metálico sutil no topo -->
+  <path d="M18 30C20 26 28 26 32 30C36 26 44 26 46 30" stroke="white" stroke-opacity="0.08"></path>
+</svg>
