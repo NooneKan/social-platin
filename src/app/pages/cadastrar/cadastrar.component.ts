@@ -1,43 +1,29 @@
-import { Component, AfterViewInit } from '@angular/core';
-
-declare global {
-  interface Window {
-    google: any;
-  }
-}
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cadastrar',
   templateUrl: './cadastrar.component.html',
   styleUrls: ['./cadastrar.component.css'],
 })
-export class CadastrarComponent implements AfterViewInit {
+export class CadastrarComponent implements OnInit {
   nome = '';
   email = '';
   senha = '';
 
   plataformas = [
+    { id: 'github', nome: 'GitHub', icone: 'assets/icons/github.svg' },
     { id: 'playstation', icone: 'assets/icons/playstation.svg' },
     { id: 'steam', nome: 'Steam', icone: 'assets/icons/steam.svg' },
     { id: 'epic', nome: 'Epic', icone: 'assets/icons/epicgames.svg' },
     { id: 'origin', nome: 'Origin', icone: 'assets/icons/origin.svg' }
   ];
 
-  ngAfterViewInit() {
-    const tryInitializeGoogle = () => {
-      if (typeof window !== 'undefined' && window.google?.accounts?.id) {
-        window.google.accounts.id.initialize({
-          client_id: '159606133907-45vu089434paa0bm563f48n0b6vcvhbo.apps.googleusercontent.com',
-          callback: this.handleCredentialResponse.bind(this),
-        });
-        console.log('✅ Google Identity Services inicializado com sucesso');
-      } else {
-        console.log('⏳ Google Identity Services ainda não carregado... tentando novamente');
-        setTimeout(tryInitializeGoogle, 300);
-      }
-    };
+  constructor(private http: HttpClient, private router: Router) {}
 
-    tryInitializeGoogle();
+  ngOnInit(): void {
+
   }
 
   onSubmit() {
@@ -46,39 +32,26 @@ export class CadastrarComponent implements AfterViewInit {
       return;
     }
     alert(`Cadastro tradicional realizado para: ${this.nome}`);
-    // Aqui você chama o backend para registrar o usuário
+
+    // Redireciona para a home após cadastro
+    this.router.navigate(['/home']);
   }
 
   loginSocial(plataformaId: string) {
-    if (plataformaId === 'Google') {
-      if (window.google?.accounts?.id) {
-        window.google.accounts.id.prompt();
-      } else {
-        alert('Google API ainda não carregada, tente novamente.');
-      }
+    if (plataformaId === 'github') {
+      this.loginComGitHub();
     } else {
-      alert(`Iniciando login com ${plataformaId} (implemente OAuth no backend)`);
-      // Aqui você pode implementar os outros OAuth
+      alert(`Login com ${plataformaId} ainda não implementado`);
     }
+    this.router.navigate(['/home']);
+
   }
 
-  handleCredentialResponse(response: any) {
-    console.log('Token JWT Google:', response.credential);
+  loginComGitHub() {
+    const clientId = 'Ov23li766aJxc12btjVV'; // seu Client ID do GitHub
+    const redirectUri = 'http://localhost:4200/auth/callback'; // callback dedicado
+    const scope = 'read:user user:email';
 
-    // Decodifica o token JWT para pegar os dados do usuário
-    const base64Url = response.credential.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(
-      atob(base64)
-        .split('')
-        .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
-        .join('')
-    );
-
-    const user = JSON.parse(jsonPayload);
-    console.log('Usuário Google:', user);
-
-    // Aqui você pode salvar os dados do usuário localmente ou chamar o backend para criar a sessão
-    alert(`Login Google realizado para: ${user.name} (${user.email})`);
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}`;
   }
 }

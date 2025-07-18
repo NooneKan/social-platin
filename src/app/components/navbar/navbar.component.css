@@ -1,5 +1,6 @@
 .navbar {
-  position: fixed;
+  position: relative;
+  overflow: visible;
   top: 0;
   left: 0;
   right: 0;
@@ -17,6 +18,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
+  overflow: visible;
+  position: relative;
 }
 
 .nav-links {
@@ -32,6 +35,8 @@
   transition: all 0.3s ease;
   padding: 8px 0;
   position: relative;
+  pointer-events: auto; /* garantir que é clicável */
+  cursor: pointer; /* mostra o cursor de clique */
 }
 
 .nav-link:hover {
@@ -41,7 +46,7 @@
 
 .nav-link::after {
   content: '';
-  position: absolute;
+  position: relative;
   bottom: 0;
   left: 0;
   width: 0;
@@ -56,7 +61,6 @@
 
 .nav-link.active {
   color: white;
-  font-weight: 600;
 }
 
 .nav-link.active::after {
@@ -70,3 +74,97 @@
 .nav-user img:hover {
   transform: scale(1.1);
 }
+
+/* Container do dropdown */
+.dropdown-container {
+  position: relative;
+}
+.dropdown-menu {
+  position: absolute;
+  top: 110%; /* logo abaixo do avatar */
+  right: 0;
+  width: 180px;
+  background: rgba(30, 30, 30, 0.7); /* mesmo fundo do cadastro */
+  border-radius: 16px; /* cantos arredondados iguais */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px); /* efeito blur */
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 2px rgba(255, 255, 255, 0.08);
+  list-style: none;
+  padding: 7px 0;
+  margin: 0;
+  display: none;
+  z-index: 1000;
+  font-family: 'Outfit', sans-serif;
+  user-select: none;
+}
+
+/* Mostrar dropdown */
+.dropdown-menu.show {
+  display: block;
+  animation: dropdownFadeSlide 0.3s ease-out;
+}
+
+/* Itens da lista */
+.dropdown-menu li {
+  padding: 12px 24px;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.9);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Links dentro do dropdown */
+.dropdown-menu li a {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+}
+
+/* Hover e foco */
+.dropdown-menu li:hover,
+.dropdown-menu li a:hover,
+.dropdown-menu li:focus {
+  color: white;
+  outline: none;
+}
+
+/* Para o avatar no navbar */
+.nav-avatar {
+  border-radius: 50%;
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease;
+  width: 19px;
+  height: 19px;
+}
+
+
+/* Container do usuário para controlar posição relativa */
+.nav-user {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  outline: none;
+}
+
+@keyframes dropdownFadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-menu.show {
+  display: block;
+  animation: dropdownFadeSlide 0.3s ease-out;
+}
+
+.nav-user:active .nav-avatar {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
+}
+

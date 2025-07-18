@@ -2,22 +2,36 @@
   <div class="nav-content">
     <!-- Logo -->
     <a class="nav-logo" routerLink="/">
-      <img src="assets/icons/logo.svg" alt="Logo" width="32">
+      <img src="assets/icons/logo.svg" alt="Logo" width="32" />
     </a>
 
     <div class="nav-links">
-      <a routerLink="/dashboard" routerLinkActive="active" class="nav-link">Dashboard</a>
+      <a routerLink="/home" (click)="irParaHome()" class="nav-link">Home</a>
       <a routerLink="/jogos" routerLinkActive="active" class="nav-link">Jogos</a>
       <a routerLink="/platinas" routerLinkActive="active" class="nav-link">Platinas</a>
       <a routerLink="/comunidade" routerLinkActive="active" class="nav-link">Comunidade</a>
     </div>
 
-    <div class="nav-user">
-      <ng-container *ngIf="authService.isLoggedIn(); else notLoggedIn">
-        <img [src]="authService.getUserPhoto() || 'assets/user-icon.svg'" alt="Perfil" width="24" class="nav-link" routerLink="/perfil">
+    <div class="nav-user" tabindex="0" (blur)="closeMenu()" >
+      <ng-container *ngIf="isLoggedIn$ | async; else showCadastrar">
+        <div class="avatar-wrapper" (click)="toggleMenu()" style="display: inline-block; cursor: pointer;">
+          <img
+            [src]="(userPhoto$ | async) || 'assets/user-icon.svg'"
+            alt="Perfil"
+            width="24"
+            class="nav-link nav-avatar"
+          />
+        </div>
+
+        <ul class="dropdown-menu" [class.show]="menuOpen">
+          <li><a routerLink="/perfil" (click)="closeMenu()">Meu Perfil</a></li>
+          <li><a routerLink="/configuracoes" (click)="closeMenu()">Configurações</a></li>
+          <li><a href="#" (click)="logout(); closeMenu()">Sair</a></li>
+        </ul>
       </ng-container>
-      <ng-template #notLoggedIn>
-        <a routerLink="/cadastrar" class="nav-link">Cadastrar</a>
+
+      <ng-template #showCadastrar>
+        <a (click)="goToCadastrar()" class="nav-link">Cadastrar</a>
       </ng-template>
     </div>
   </div>
