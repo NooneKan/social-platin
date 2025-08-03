@@ -1,31 +1,41 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+
+export interface User {
+  login: string;
+  name: string;
+  avatar_url: string;
+  email: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private isLoggedInSubject = new BehaviorSubject<boolean>(false); // Estado inicial: não logado
-  private userPhotoSubject = new BehaviorSubject<string | null>(null); // Foto do perfil (pode ser null)
+  private backendUrl = 'http://localhost:8080/auth/github';
 
-  isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable();
-  userPhoto$: Observable<string | null> = this.userPhotoSubject.asObservable();
+  private userSubject = new BehaviorSubject<User | null>(null);
+  user$ = this.userSubject.asObservable();
 
-  login(userPhoto: string) {
-    this.isLoggedInSubject.next(true);
-    this.userPhotoSubject.next(userPhoto);
+  private loggedInSubject = new BehaviorSubject<boolean>(false);
+  isLoggedIn$ = this.loggedInSubject.asObservable();
+
+  constructor(private http: HttpClient) {}
+
+  authenticateWithGitHub(code: string) {
+    return this.http.post<User>(this.backendUrl, { code });
+  }
+
+  setUser(user: User) {
+    this.userSubject.next(user);
+    this.loggedInSubject.next(true);
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
   logout() {
-    this.isLoggedInSubject.next(false);
-    this.userPhotoSubject.next(null);
-  }
-
-  isLoggedIn(): boolean {
-    return this.isLoggedInSubject.value;
-  }
-
-  getUserPhoto(): string | null {
-    return this.userPhotoSubject.value;
+    this.userSubject.next(null);
+    this.loggedInSubject.next(false);
+    localStorage.removeItem('user');
   }
 }
