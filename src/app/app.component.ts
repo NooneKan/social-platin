@@ -6,11 +6,11 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 
 @Component({
   selector: 'app-root',
-  standalone: true, // ← AppComponent também é standalone
+  standalone: true,
   imports: [
     CommonModule,
     RouterOutlet,
-    NavbarComponent // ← Adicione aqui
+    NavbarComponent
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']

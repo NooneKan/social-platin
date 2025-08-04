@@ -22,7 +22,7 @@ export interface Jogo {
 export class JogosService {
 
   private readonly API_URL = 'https://api.rawg.io/api/games';
-  private readonly API_KEY = '54f6d05e456b41819909d20b27d10181'; // Cadastre-se no rawg.io e pegue sua chave
+  private readonly API_KEY = '54f6d05e456b41819909d20b27d10181';
 
   constructor(private http: HttpClient) { }
 
@@ -45,7 +45,7 @@ export class JogosService {
   getJogosRelevantes(): Observable<Jogo[]> {
   const params = new HttpParams()
     .set('key', this.API_KEY)
-    .set('ordering', '-added') // jogos mais adicionados à biblioteca dos usuários
+    .set('ordering', '-added')
     .set('page_size', '10');
 
   return this.http.get<any>(this.API_URL, { params }).pipe(

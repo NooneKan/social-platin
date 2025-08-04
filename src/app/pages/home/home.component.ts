@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
 ngOnInit() {
   this.jogosService.getJogosMaisBemAvaliados().subscribe({
     next: jogos => {
-      console.log('Jogos recebidos da API:', jogos);  // ← log aqui
+      console.log('Jogos recebidos da API:', jogos);
       this.jogosMaisBemAvaliados = jogos;
     },
     error: err => console.error('Erro ao buscar jogos:', err)

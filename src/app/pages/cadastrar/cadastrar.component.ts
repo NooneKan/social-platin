@@ -33,7 +33,6 @@ export class CadastrarComponent implements OnInit {
     }
     alert(`Cadastro tradicional realizado para: ${this.nome}`);
 
-    // Redireciona para a home após cadastro
     this.router.navigate(['/home']);
   }
 
@@ -48,8 +47,8 @@ export class CadastrarComponent implements OnInit {
   }
 
   loginComGitHub() {
-    const clientId = 'Ov23li766aJxc12btjVV'; // seu Client ID do GitHub
-    const redirectUri = 'http://localhost:4200/auth/callback'; // callback dedicado
+    const clientId = 'Ov23li766aJxc12btjVV';
+    const redirectUri = 'http://localhost:4200/auth/callback';
     const scope = 'read:user user:email';
 
     window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}`;

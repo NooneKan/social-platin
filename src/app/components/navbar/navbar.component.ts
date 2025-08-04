@@ -17,9 +17,8 @@ export class NavbarComponent {
   menuOpen: boolean = false;
 
   constructor(public authService: AuthService, private router: Router) {
-    this.isLoggedIn$ = this.authService.isLoggedIn$;  // observable de login
+    this.isLoggedIn$ = this.authService.isLoggedIn$;
     this.userPhoto$ = this.authService.user$.pipe(
-      // pega só o avatar_url ou retorna null
       map(user => user ? user.avatar_url : null)
     );
     this.menuOpen = false;
